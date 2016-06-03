@@ -23,12 +23,15 @@
       .image-only p {
         text-align: center;
       }
-
+      .hljs-mono-blue .hljs {
+          font-size: 15px;
+      }
       .remark-slide-content {
+          font-size: 15px;
           background-image: url('images/background.jpg')  ;
       }
 
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code, .remark-inline-code { font-family: 'Arial'; }
     </style>
   </head>
   <body>
@@ -66,21 +69,25 @@ print(sum(numbers)) # Prints 10
 
 ```
 ---
-### Expressões sempre retornam um valor, você pode usá-las como argumentos em funções
+# Ainda sobre expressões...
+
+if **statement**
 ```python
 if True:
   return 'Works!'
 else:
   return 'Error!'
 ```
+if **expression**
 ```python
 'Works!' if True else 'Error!'
 
-my_function('Works' if True else 'Error')
+my_function('Works!' if True else 'Error!')
 ```
 
 --
-### Programação Funcional enfatiza o uso de expressões
+Expressões sempre retornam um valor, você pode usá-las como argumentos em funções.
+Programação Funcional enfatiza o uso de expressões
 ---
 # Mutabilidade vs. Imutabilidade
 
@@ -106,7 +113,7 @@ def sum_(numbers):
 print(sum_([1,2,3,4]) # Prints 10 (1 + (2 + (3 + (4 + (0)))))
 ```
 ---
-# Entendendo recursão
+# Entendendo recursão...
 
 ```python
 def sum_(numbers):
@@ -136,7 +143,7 @@ print(sum_([1, 2, 3, 4]))
 
 # Composição de funções
 
-f2(f1(value))
+`f2(f1(value))`
 
 ```python
 def clean_and_lower(text):
@@ -157,9 +164,7 @@ print(clean_and_lower("Anderson  ")) # Prints "anderson"
 
 ```
 --
-###"Pense nisso como se estivesse brincando com lego, você vai combinando peças menores construindo algo mais complexo"
-
-
+"Pense como se estivesse brincando com Lego, você vai combinando peças menores construindo algo mais complexo"
 ---
 class: middle center
 # Programação funcional em Python
@@ -201,7 +206,6 @@ def convert_to(to_what, number):
  return to_what(number)
 
 convert_to(float, 20) # convert 20 to float
-
 convert_to(str, 10) # convert 10 to str
 ```
 ---
@@ -222,6 +226,7 @@ numbers = [1, 2, 3, 4]
 new_numbers = []
 for number in numbers:
   new_numbers.append(number * 2)
+
 print(new_numbers)
 ```
 
@@ -230,11 +235,12 @@ print(new_numbers)
 
 Lambdas são funções anônimas que geralmente são passadas como parametros para outras funções. Lambdas são também expressões.
 
-def statement
+`def` statement
 ```python
 def add_one(number):
   return number + 1
 ```
+--
 #### Lambda
 ```python
 add_one = lambda number: number + 1
@@ -250,9 +256,7 @@ print(list(map(lambda number: number + 1, [1, 2, 3, 4])))
 # List Comprehensions
 Muitas vezes usamos loops para iterar sobre listas e executa ações sobre os elementos. List comprehensions são uma forma mais declarativa.
 
---
-
-Regular for
+`for` statement
 ```python
 dogs = ["Todd", "Tom", "Bob"]
 big_dogs = []
@@ -280,7 +284,6 @@ print(big_dogs)
 
 #Operator: contribuindo com o uso de high-order functions
 
---
 Soma regular
 ```python
 soma = 1 + 2
@@ -296,16 +299,10 @@ print('A'+'B') # prints AB
 print(operator.concat('A', 'B')) # prints AB
 
 ```
-
----
-class: middle center
-### I know that you may be wondering why one would use operator instead of simply using 1 + 2.
-### I will show you when to use operator and why it’s waaay better to perform some of the High-order functions.
-
 ---
 # Functools: Reduce
 
-Vamos somar uma lista de numeros.
+Vamos somar uma lista de numeros:
 
 #### Reduce
 ```python
@@ -340,7 +337,8 @@ print(call_me_mr("Anderson"))  # prints Mr Anderson
 print(call_me_mrs("Renata")) # prints Mrs Renata
 
 ```
-#image
+--
+![Alt text](images/partial.png)
 ---
 
 # Exemplo 1:
@@ -349,20 +347,20 @@ Vamos combinar **partial** com a função **sorted** e o modulo **operator**:
 
 ```python
 person = namedtuple('Person', 'name age')
-persons = [person('Anderson', 29), person('Renato', 25), person('Diego', 27)]
+people = [person('Anderson', 29), person('Renato', 25), person('Diego', 27)]
 ```
 --
 ```python
-sorted(persons, key=lambda p: p.name)
-sorted(persons, key=lambda p: p.age)
+sorted(people, key=lambda p: p.name)
+sorted(people, key=lambda p: p.age)
 ```
 --
 ```python
-def sort_by_name(persons):
-  return sorted(persons, key=lambda p: p.name)
+def sort_by_name(people):
+  return sorted(people, key=lambda p: p.name)
 
-def sort_by_age(persons):
-  return sorted(persons, key=lambda p: p.age)
+def sort_by_age(people):
+  return sorted(people, key=lambda p: p.age)
 ```
 --
 #### Usando partial:
@@ -381,16 +379,13 @@ sort_by_age = functools.partial(sorted, key=operator.attrgetter('age'))
 
 Retorno da API
 ```python
-person_one = {
-  'name':'Anderson',
-  'redes_sociais': [
+person_one = {'name':'Anderson', 'redes_sociais': [
     {'name': 'facebook', 'profile_img': 'img1'},
     {'name': 'twitter', 'profile_img': ''}]}
+
 person_two = {'name':'Renato', 'redes_sociais': [
-        {'name': 'facebook', 'profile_img': ''},
-        {'name': 'twitter', 'profile_img': 'img2'}
-    ]
-}
+    {'name': 'facebook', 'profile_img': ''},
+    {'name': 'twitter', 'profile_img': 'img2'}]}
 ```
 --
 Uma função simples que retorna a primeira imagem do profile encontrada
@@ -399,22 +394,19 @@ def get_profile_img(person):
     for social in person['redes_sociais']:
         if social['image']:
             return social['image']
-    return ''
+    return 'default'
 ```
 
 ---
-A imagem da capa esta sendo retornada também pela API
+Agora a imagem da capa esta sendo retornada pela API também:
 ```python
 person_one = {'name':'Anderson', 'redes_sociais': [
-        {'name': 'facebook', 'profile_img': 'img1', 'cover_image': 'cimg1'},
-        {'name': 'twitter', 'profile_img': '', 'cover_image': 'cimg2'}
-    ]
-}
+    {'name': 'facebook', 'profile_img': 'img1', 'cover_image': 'cimg1'},
+    {'name': 'twitter', 'profile_img': '', 'cover_image': 'cimg2'}]}
+
 person_two = {'name':'Renato', 'redes_sociais': [
-        {'name': 'facebook', 'profile_img': '', 'cover_image': ''},
-        {'name': 'twitter', 'profile_img': 'img2', 'cover_image': 'cimg3'}
-    ]
-}
+    {'name': 'facebook', 'profile_img': '', 'cover_image': ''},
+    {'name': 'twitter', 'profile_img': 'img2', 'cover_image': 'cimg3'}]}
 ```
 --
 Primeira Abordagem (Ruim)
@@ -429,7 +421,7 @@ def get_cover_img(person):
     for social in person['redes_sociais']:
         if social['cover_image']:
             return social['cover_image']
-    return ''
+    return 'default'
 ```
 ---
 Segunda Abordagem (Normal)
@@ -438,7 +430,7 @@ def get_img_by(which_image, person):
     for social in person['redes_sociais']:
         if social[which_image]:
             return social[which_image]
-    return ''
+    return 'default'
 
 def get_profile_img(person):
     return get_img_by('image', person)
@@ -448,10 +440,10 @@ def get_cover_img(person):
 ```
 --
 #### Usando Partial
-A cada nova imagem uma única linha de código, declarativo e legal
+A cada nova imagem uma única linha de código, declarativo e mais legal:
 ```python
-get_profile_img = functools.partial(get_picture_by, 'image')
-get_cover_img = functools.partial(get_picture_by, 'cover_image')
+get_profile_img = functools.partial(get_img_by, 'image')
+get_cover_img = functools.partial(get_img_by, 'cover_image')
 ```
 ---
 
