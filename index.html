@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Functional Programing</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif';}
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      ul li {
+        margin-bottom: 20px;
+      }
+
+      img[alt=react-style-diagram] { width: 500px;}
+
+      .image-only p {
+        text-align: center;
+      }
+
+      .remark-slide-content {
+          background-image: url('images/background.jpg')  ;
+      }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: middle center
+# Programação Funcional em Python3
+
+## de forma simples
+
+Anderson Resende
+
+---
+class: middle center
+# O que é?
+
+## Imperativo(OOP) X Funcional
+
+---
+# Statements vs. Expressions (Declarativo)
+
+"Como fazer"
+```python
+numbers = [1, 2, 3, 4]
+total = 0
+for number in numbers:
+  total += number
+print(total) # Prints 10
+```
+"O que você quer"
+```python
+numbers = [1, 2, 3, 4]
+print(sum(numbers)) # Prints 10
+
+```
+---
+### Expressões sempre retornam um valor, você pode usá-las como argumentos em funções
+```python
+if True:
+  return 'Works!'
+else:
+  return 'Error!'
+```
+```python
+'Works!' if True else 'Error!'
+
+my_function('Works' if True else 'Error')
+```
+
+--
+### Programação Funcional enfatiza o uso de expressões
+---
+# Mutabilidade vs. Imutabilidade
+
+Mutabilidade:
+```python
+def sum_(numbers):
+  total = 0
+  for number in numbers:
+      total += number
+  return total
+
+print(sum_lst[1,2,3,4]) # Prints 10
+```
+Imutabilidade:
+```python
+def sum_(numbers):
+  if not lst:
+      return 0
+  first = numbers[0]
+  rest = numbers[1:]
+  return first + sum_(rest)
+
+print(sum_([1,2,3,4]) # Prints 10 (1 + (2 + (3 + (4 + (0)))))
+```
+---
+# Entendendo recursão
+
+```python
+def sum_(numbers):
+  if not lst:
+      return 0
+  first = numbers[0]
+  rest = numbers[1:]
+  return first + sum_(rest)
+```
+
+```python
+
+print(sum_([1, 2, 3, 4]))
+
+1 + sum_(2, 3, 4)
+1 + (2 + sum_(3, 4))
+1 + (2 + (3 + sum_(4)))
+1 + (2 + (3 + (4 + sum_([]))))
+1 + (2 + (3 + (4 + 0)))
+1 + (2 + (3 + 4))
+1 + (2 + 7)
+1 + 10
+11
+```
+
+---
+
+# Composição de funções
+
+f2(f1(value))
+
+```python
+def clean_and_lower(text):
+   return text.strip().lower()
+
+print(clean_and_lower("Anderson  ")) # Prints "anderson"
+
+```
+```python
+pip install toolz
+```
+
+```python
+import toolz
+
+clean_and_lower = toolz.compose(str.strip, str.lower)
+print(clean_and_lower("Anderson  ")) # Prints "anderson"
+
+```
+--
+###"Pense nisso como se estivesse brincando com lego, você vai combinando peças menores construindo algo mais complexo"
+
+
+---
+class: middle center
+# Programação funcional em Python
+
+![Alt text](images/morpheus.jpg)
+
+---
+# Programação funcional em Python
+
+- First-Class functions
+- Higher-Order functions
+- Lambda
+- List Comprehensions
+---
+
+# First-class functions
+
+Uma linguagem que possue First-Class functions trata funções como um dado qualquer, elas podem ser passadas em outros funções como argumentos ou em variáveis.
+
+```python
+def call_my_name(name):
+  return name
+
+call_my_name_again = call_my_name
+
+print(call_my_name('Anderson')) # prints Anderson
+
+print(call_my_name_again('Anderson')) # also prints Anderson
+```
+
+---
+
+# Higher order functions
+
+Higher-Order functions são funções que recebem uma ou mais funções como argumento ou retornam funções.
+
+```python
+def convert_to(to_what, number):
+ return to_what(number)
+
+convert_to(float, 20) # convert 20 to float
+
+convert_to(str, 10) # convert 10 to str
+```
+---
+
+# Using Map (High-Order function, also builtin)
+
+Funcional
+```python
+def double(number):
+  return number * 2
+
+print(list(map(double, [1, 2, 3, 4])))
+```
+--
+Imperativa
+```python
+numbers = [1, 2, 3, 4]
+new_numbers = []
+for number in numbers:
+  new_numbers.append(number * 2)
+print(new_numbers)
+```
+
+---
+# Lambda
+
+Lambdas are anonymous functions that are usually passed as parameters to other functions. Lambdas also are expressions!
+
+Regular def statement
+```python
+def add_one(number):
+  return number + 1
+```
+Lambda expression
+```python
+add_one = lambda number: number + 1
+print(add_one(10)) # prints 11
+```
+--
+# Using Map + Lambda
+```python
+print(list(map(lambda number: number + 1, [1, 2, 3, 4])))
+```
+
+---
+# List Comprehensions
+
+Most times we use loops to iterate over lists and execute actions in its elements. List comprehensions are a more declarative way.
+
+--
+####Regular for
+```python
+dogs = ["Todd", "Tom", "Bob"]
+big_dogs = []
+for dog in dogs:
+  big_dogs.append("Big {}".format(dog))
+print(big_dogs)
+```
+--
+####Comprehensions (Expressions)
+```python
+dogs = ["Todd", "Tom", "Bob"]
+big_dogs = ["Big {}".format(dog) for dog in dogs]
+print(big_dogs)
+
+```
+
+---
+# Combine Everything
+
+## 1) Operator
+## 2) Functools
+
+---
+
+#  Operator: contributing towards the use of high-order functions
+
+--
+## Regular Sum
+```python
+soma = 1 + 2
+print(soma) # Prints 3
+```
+--
+## Using Operator
+```python
+soma = operator.add(1, 2)
+print(soma) # Prints 3, operator.add is only a sum function
+
+
+print('A'+'B') # prints AB
+print(operator.concat("A", "B")) # prints AB too
+
+```
+
+---
+class: middle center
+### I know that you may be wondering why one would use operator instead of simply using 1 + 2.
+### I will show you when to use operator and why it’s waaay better to perform some of the High-order functions.
+
+---
+# Functools, a walk in the park:
+
+Let’s sum a list of numbers:
+
+--
+```python
+print(functools.reduce(lambda a, b: a+b, range(5)))
+```
+--
+Using operator
+```python
+  print(functools.reduce(operator.add, range(5)))
+```
+--
+How reduce works:
+#image
+```python
+print(functools.reduce(operator.concat,
+        ["Reduce", " is", " Awesome!"])) # prints Reduce is Awesome
+```
+---
+#Reduce and operator at in Django
+
+---
+# Partial
+
+Check the exemple using the operator.add:
+
+```python
+call_me_mr = functools.partial(operator.concat, "Mr ")
+call_me_mrs = functools.partial(operator.concat, "Mrs ")
+
+print(call_me_mr("Anderson"))  # prints Mr Anderson
+print(call_me_mrs("Renata")) # prints Mrs Renata
+
+```
+#image
+---
+
+# Something Real
+
+Let’s combine partial with the sorted function and the operator module:
+
+```python
+person = namedtuple('Person', 'name age')
+persons = [person('Anderson', 29), person('Renato', 25), person('Diego', 27)]
+```
+--
+```python
+sorted(persons, key=lambda p: p.name)
+sorted(persons, key=lambda p: p.age)
+
+```
+--
+```python
+def sort_by_name(persons):
+  return sorted(persons, key=lambda p: p.name)
+
+def sort_by_age(persons):
+  return sorted(persons, key=lambda p: p.age)
+```
+--
+```python
+sort_by_name = functools.partial(sorted, key=lambda p: p.name)
+sort_by_age = functools.partial(sorted, key=lambda p: p.age)
+```
+--
+Using operator:
+
+```python
+sort_by_name = functools.partial(sorted, key=operator.attrgetter('name'))
+sort_by_age = functools.partial(sorted, key=operator.attrgetter('age'))
+```
+---
+```python
+person_one = {'name':'Anderson', 'redes_sociais': [
+        {'name': 'facebook', 'profile_img': 'img1'},
+        {'name': 'twitter', 'profile_img': ''}
+    ]
+}
+person_two = {'name':'Renato', 'redes_sociais': [
+        {'name': 'facebook', 'profile_img': ''},
+        {'name': 'twitter', 'profile_img': 'img2'}
+    ]
+}
+```
+--
+```python
+def get_profile_img(person):
+    for social in person['redes_sociais']:
+        if social['image']:
+            return social['image']
+    return ''
+```
+
+---
+```python
+person_one = {'name':'Anderson', 'redes_sociais': [
+        {'name': 'facebook', 'profile_img': 'img1', 'cover_image': 'cimg1'},
+        {'name': 'twitter', 'profile_img': '', 'cover_image': 'cimg2'}
+    ]
+}
+person_two = {'name':'Renato', 'redes_sociais': [
+        {'name': 'facebook', 'profile_img': '', 'cover_image': ''},
+        {'name': 'twitter', 'profile_img': 'img2', 'cover_image': 'cimg3'}
+    ]
+}
+```
+--
+Primeira Abordagem
+```python
+def get_profile_img(person):
+    for social in person['redes_sociais']:
+        if social['image']:
+            return social['image']
+    return ''
+
+def get_cover_img(person):
+    for social in person['redes_sociais']:
+        if social['cover_image']:
+            return social['cover_image']
+    return ''
+```
+---
+Segunda Abordagem
+```python
+def get_img_by(which_image, person):
+    for social in person['redes_sociais']:
+        if social[which_image]:
+            return social[which_image]
+    return ''
+
+def get_profile_img(person):
+    get_img_by('image', person)
+
+def get_cover_img(person):
+    get_img_by('cover_image', person)
+```
+--
+### Using Partial:
+```python
+get_profile_img = functools.partial(get_picture_by, 'image')
+get_cover_img = functools.partial(get_picture_by, 'cover_image')
+```
+---
+
+#Partial at in Django
+
+---
+class: middle center
+# Espero que...
+![Alt text](images/cat.jpg)
+
+---
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+        var nome = ["docco", 'mono-blue'];
+      var slideshow = remark.create({
+          slideNumberFormat: '',
+          highlightLanguage: 'python',
+          highlightStyle: 'mono-blue',
+      });
+    </script>
+  </body>
+</html>
