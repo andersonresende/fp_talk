@@ -171,7 +171,7 @@ class: middle center
 
 - First-Class functions
 - Higher-Order functions
-- Lambda
+- Lambda expression
 - List Comprehensions
 ---
 
@@ -206,7 +206,7 @@ convert_to(str, 10) # convert 10 to str
 ```
 ---
 
-# Using Map (High-Order function, also builtin)
+# Usando Map (High-Order function)
 
 Funcional
 ```python
@@ -226,33 +226,33 @@ print(new_numbers)
 ```
 
 ---
-# Lambda
+# Lambda expressions
 
-Lambdas are anonymous functions that are usually passed as parameters to other functions. Lambdas also are expressions!
+Lambdas são funções anônimas que geralmente são passadas como parametros para outras funções. Lambdas são também expressões.
 
-Regular def statement
+def statement
 ```python
 def add_one(number):
   return number + 1
 ```
-Lambda expression
+#### Lambda
 ```python
 add_one = lambda number: number + 1
 print(add_one(10)) # prints 11
 ```
 --
-# Using Map + Lambda
+#### Usando Map + Lambda
 ```python
 print(list(map(lambda number: number + 1, [1, 2, 3, 4])))
 ```
 
 ---
 # List Comprehensions
-
-Most times we use loops to iterate over lists and execute actions in its elements. List comprehensions are a more declarative way.
+Muitas vezes usamos loops para iterar sobre listas e executa ações sobre os elementos. List comprehensions são uma forma mais declarativa.
 
 --
-####Regular for
+
+Regular for
 ```python
 dogs = ["Todd", "Tom", "Bob"]
 big_dogs = []
@@ -261,7 +261,7 @@ for dog in dogs:
 print(big_dogs)
 ```
 --
-####Comprehensions (Expressions)
+#### Comprehensions (Expressions)
 ```python
 dogs = ["Todd", "Tom", "Bob"]
 big_dogs = ["Big {}".format(dog) for dog in dogs]
@@ -270,30 +270,30 @@ print(big_dogs)
 ```
 
 ---
-# Combine Everything
+#Combinando tudo: dois importantes módulos.
 
-## 1) Operator
-## 2) Functools
+### 1) Operator
+
+### 2) Functools
 
 ---
 
-#  Operator: contributing towards the use of high-order functions
+#Operator: contribuindo com o uso de high-order functions
 
 --
-## Regular Sum
+Soma regular
 ```python
 soma = 1 + 2
 print(soma) # Prints 3
 ```
 --
-## Using Operator
+### Usando Operator
 ```python
 soma = operator.add(1, 2)
-print(soma) # Prints 3, operator.add is only a sum function
-
+print(soma) # Prints 3, operator.add é apenas uma função de soma
 
 print('A'+'B') # prints AB
-print(operator.concat("A", "B")) # prints AB too
+print(operator.concat('A', 'B')) # prints AB
 
 ```
 
@@ -303,22 +303,23 @@ class: middle center
 ### I will show you when to use operator and why it’s waaay better to perform some of the High-order functions.
 
 ---
-# Functools, a walk in the park:
+# Functools: Reduce
 
-Let’s sum a list of numbers:
+Vamos somar uma lista de numeros.
 
---
+#### Reduce
 ```python
-print(functools.reduce(lambda a, b: a+b, range(5)))
+print(functools.reduce(lambda a, b: a+b, [3, 5, 2, 1]))
 ```
 --
-Using operator
+#### Usando Reduce + Operator
 ```python
-  print(functools.reduce(operator.add, range(5)))
+print(functools.reduce(operator.add, [3, 5, 2, 1))
 ```
 --
-How reduce works:
-#image
+![Alt text](images/reduce.png)
+--
+
 ```python
 print(functools.reduce(operator.concat,
         ["Reduce", " is", " Awesome!"])) # prints Reduce is Awesome
@@ -327,9 +328,9 @@ print(functools.reduce(operator.concat,
 #Reduce and operator at in Django
 
 ---
-# Partial
+# Functools: Partial
 
-Check the exemple using the operator.add:
+Observe o exemplo abaixo usando operator.add:
 
 ```python
 call_me_mr = functools.partial(operator.concat, "Mr ")
@@ -342,9 +343,9 @@ print(call_me_mrs("Renata")) # prints Mrs Renata
 #image
 ---
 
-# Something Real
+# Exemplo 1:
 
-Let’s combine partial with the sorted function and the operator module:
+Vamos combinar **partial** com a função **sorted** e o modulo **operator**:
 
 ```python
 person = namedtuple('Person', 'name age')
@@ -354,7 +355,6 @@ persons = [person('Anderson', 29), person('Renato', 25), person('Diego', 27)]
 ```python
 sorted(persons, key=lambda p: p.name)
 sorted(persons, key=lambda p: p.age)
-
 ```
 --
 ```python
@@ -365,24 +365,27 @@ def sort_by_age(persons):
   return sorted(persons, key=lambda p: p.age)
 ```
 --
+#### Usando partial:
 ```python
 sort_by_name = functools.partial(sorted, key=lambda p: p.name)
 sort_by_age = functools.partial(sorted, key=lambda p: p.age)
 ```
 --
-Using operator:
 
 ```python
 sort_by_name = functools.partial(sorted, key=operator.attrgetter('name'))
 sort_by_age = functools.partial(sorted, key=operator.attrgetter('age'))
 ```
 ---
+# Exemplo 2:
+
+Retorno da API
 ```python
-person_one = {'name':'Anderson', 'redes_sociais': [
-        {'name': 'facebook', 'profile_img': 'img1'},
-        {'name': 'twitter', 'profile_img': ''}
-    ]
-}
+person_one = {
+  'name':'Anderson',
+  'redes_sociais': [
+    {'name': 'facebook', 'profile_img': 'img1'},
+    {'name': 'twitter', 'profile_img': ''}]}
 person_two = {'name':'Renato', 'redes_sociais': [
         {'name': 'facebook', 'profile_img': ''},
         {'name': 'twitter', 'profile_img': 'img2'}
@@ -390,6 +393,7 @@ person_two = {'name':'Renato', 'redes_sociais': [
 }
 ```
 --
+Uma função simples que retorna a primeira imagem do profile encontrada
 ```python
 def get_profile_img(person):
     for social in person['redes_sociais']:
@@ -399,6 +403,7 @@ def get_profile_img(person):
 ```
 
 ---
+A imagem da capa esta sendo retornada também pela API
 ```python
 person_one = {'name':'Anderson', 'redes_sociais': [
         {'name': 'facebook', 'profile_img': 'img1', 'cover_image': 'cimg1'},
@@ -412,7 +417,7 @@ person_two = {'name':'Renato', 'redes_sociais': [
 }
 ```
 --
-Primeira Abordagem
+Primeira Abordagem (Ruim)
 ```python
 def get_profile_img(person):
     for social in person['redes_sociais']:
@@ -427,7 +432,7 @@ def get_cover_img(person):
     return ''
 ```
 ---
-Segunda Abordagem
+Segunda Abordagem (Normal)
 ```python
 def get_img_by(which_image, person):
     for social in person['redes_sociais']:
@@ -436,13 +441,14 @@ def get_img_by(which_image, person):
     return ''
 
 def get_profile_img(person):
-    get_img_by('image', person)
+    return get_img_by('image', person)
 
 def get_cover_img(person):
-    get_img_by('cover_image', person)
+    return get_img_by('cover_image', person)
 ```
 --
-### Using Partial:
+#### Usando Partial
+A cada nova imagem uma única linha de código, declarativo e legal
 ```python
 get_profile_img = functools.partial(get_picture_by, 'image')
 get_cover_img = functools.partial(get_picture_by, 'cover_image')
