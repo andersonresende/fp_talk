@@ -18,7 +18,7 @@
         margin-bottom: 20px;
       }
 
-      img[alt=react-style-diagram] { width: 500px;}
+      img[alt=simpson] { width: 500px; height:800px; }
 
       .image-only p {
         text-align: center;
@@ -139,7 +139,8 @@ def sum_(numbers):
 ```
 ---
 ## Ainda sobre recursão...
-#image
+
+![Alt text](images/japones.jpg)
 ---
 
 # Composição de funções
@@ -171,7 +172,7 @@ clean_and_lower = toolz.compose(str.strip, str.lower)
 class: middle center
 # Programação funcional em Python
 
-![Alt text](images/morpheus.jpg)
+![Alt simpson](images/simpson.jpg)
 
 ---
 # Programação funcional em Python
@@ -191,6 +192,9 @@ def call_my_name(name):
   return name
 
 call_my_name_again = call_my_name
+
+>>> call_my_name_again == call_my_name
+>>> True
 
 >>> call_my_name('Anderson')
 >>> 'Anderson'
@@ -219,6 +223,16 @@ def convert_to(to_what, number):
 
 # Usando Map (High-Order function)
 
+Imperativa
+```python
+numbers = [1, 2, 3, 4]
+new_numbers = []
+for number in numbers:
+  new_numbers.append(number * 2)
+>>> new_numbers
+>>> [2, 4, 6, 8]
+```
+--
 Funcional
 ```python
 def double(number):
@@ -227,18 +241,6 @@ def double(number):
 >>> list(map(double, [1, 2, 3, 4]))
 >>> [2, 4, 6, 8]
 ```
---
-Imperativa
-```python
-numbers = [1, 2, 3, 4]
-new_numbers = []
-for number in numbers:
-  new_numbers.append(number * 2)
-
->>> new_numbers
->>> [2, 4, 6, 8]
-```
-
 ---
 # Lambda expressions (Funções anônimas)
 
@@ -309,6 +311,9 @@ soma = 1 + 2
 --
 ### Usando Operator
 ```python
+import operator
+```
+```python
 soma = operator.add(1, 2)
 
 >>> soma
@@ -358,10 +363,12 @@ call_me_mr = partial(operator.concat, 'Mr ')
 >>> 'Mr Renato'
 ```
 ---
-## Entendendo partial
-![Alt text](images/partial.png)
----
+class: middle center
+![Alt text](images/futurama.jpg)
 
+
+
+---
 # Exemplo 1:
 
 Vamos combinar **partial** com a função **sorted** e o modulo **operator**:
@@ -486,6 +493,9 @@ A cada nova imagem uma única linha de código, declarativo e mais legal:
 get_profile_img = partial(get_img_by, 'image')
 get_cover_img = partial(get_img_by, 'cover_image')
 ```
+---
+# Exemplo 3:
+Enviando emails:
 ---
 Beneficios de usar funcional em python
 - previne bugs
