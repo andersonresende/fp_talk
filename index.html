@@ -496,6 +496,47 @@ get_cover_img = partial(get_img_by, 'cover_image')
 ---
 # Exemplo 3:
 Enviando emails:
+
+```python
+from templated_email import send_templated_mail
+```
+
+```python
+def send_welcome_email(user, request):
+    send_templated_mail(
+        template_name='welcome_template',
+        recipient_list=[user.email],
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        context={'user': user}
+    )
+
+def send_payment_email(user):
+    send_templated_mail(
+        template_name='payment_template',
+        recipient_list=[user.email],
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        context={'user': user}
+    )
+```
+---
+Usando Partial:
+
+1) Criamos uma função base:
+```python
+def send_base_email(template_name, user):
+    send_templated_mail(
+        template_name=template_name,
+        recipient_list=[user.email],
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        context={'user': user}
+    )
+```
+--
+2) Usamos partial:
+```python
+send_welcome_email = partial(send_base_email, 'welcome_template')
+send_welcome_email = partial(send_base_email, 'payment_template')
+```
 ---
 Beneficios de usar funcional em python
 - previne bugs
