@@ -18,7 +18,7 @@
         margin-bottom: 20px;
       }
 
-      img[alt=simpson] { width: 500px; height:800px; }
+      img[alt='Alt simpson'] { width: 700px; height:500px; }
 
       .image-only p {
         text-align: center;
@@ -51,6 +51,8 @@ class: middle center
 ## de forma simples
 
 Anderson Resende
+<p>@AndersonRe86</p>
+<p>github.com/andersonresende</p>
 
 ---
 class: middle center
@@ -535,17 +537,11 @@ def send_base_email(template_name, user):
 2) Usamos partial:
 ```python
 send_welcome_email = partial(send_base_email, 'welcome_template')
-send_welcome_email = partial(send_base_email, 'payment_template')
+send_payment_email = partial(send_base_email, 'payment_template')
 ```
 ---
-Beneficios de usar funcional em python
-- previne bugs
-- diminui linhas de codigo
-- código mais declarativo e elegante
--
----
 class: middle center
-# Espero que...
+# Obrigado e espero que...
 ![Alt text](images/cat.jpg)
 
     </textarea>
